@@ -9,6 +9,14 @@ import androidx.annotation.NonNull;
 public class ListViewNumber implements Parcelable {
     private int mNumber;
 
+    public int getmNumber() {
+        return mNumber;
+    }
+
+    public void setmNumber(int mNumber) {
+        this.mNumber = mNumber;
+    }
+
     public ListViewNumber(int num) {
         this.mNumber = num;
     }

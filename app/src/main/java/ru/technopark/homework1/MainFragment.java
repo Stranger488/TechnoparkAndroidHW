@@ -28,6 +28,12 @@ public class MainFragment extends Fragment {
     private Button mAddButton;
     private Parcelable mListState;
 
+    OnItemSelectedListener callback;
+
+    public void setOnItemSelectedListener(OnItemSelectedListener callback) {
+        this.callback = callback;
+    }
+
     public MainFragment() {
         //
     }
@@ -45,6 +51,8 @@ public class MainFragment extends Fragment {
         ItemClickListener clickListener = new ItemClickListener() {
             @Override
             public void onItemClick(ListViewNumber item) {
+                int number = item.getmNumber();
+                callback.onItemSelected(number);
 
 
             }
@@ -99,5 +107,9 @@ public class MainFragment extends Fragment {
             return LANDSCAPE_COLUMN_NUMBER;
         }
         return PORTRAIT_COLUMN_NUMBER;
+    }
+
+    public interface OnItemSelectedListener {
+        public void onItemSelected(int position);
     }
 }
