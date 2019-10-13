@@ -22,4 +22,16 @@ public class ListViewSingleton {
     public List<ListViewNumber> getData() {
         return mData;
     }
+
+    public void addNumber(int i) {
+        mData.add(new ListViewNumber(i));
+    }
+
+    public void restoreState(int size) {
+        if (size > 100) {
+            for (int i = 101; i < size; i++) {
+                mData.add(new ListViewNumber(i));
+            }
+        }
+    }
 }

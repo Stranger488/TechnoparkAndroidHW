@@ -34,10 +34,11 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewHolder> {
             holder.getListItemView().setText(current.toString());
             holder.bind(current, mClickListener);
         }
+
     }
 
     @Override
-    public int getItemCount() {
+    public int getItemCount () {
         return mNumbers.size();
     }
 }

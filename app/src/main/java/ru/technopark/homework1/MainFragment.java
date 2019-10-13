@@ -1,6 +1,5 @@
 package ru.technopark.homework1;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
@@ -16,19 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import static ru.technopark.homework1.CommonConstants.LANDSCAPE_COLUMN_NUMBER;
-import static ru.technopark.homework1.CommonConstants.PORTRAIT_COLUMN_NUMBER;
-
 public class MainFragment extends Fragment {
-    private List<ListViewNumber> mData;
-
     private ListViewAdapter mListViewAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView mRecyclerView;
     private Button mAddButton;
     private Parcelable mListState;
-
-    OnItemSelectedListener callback;
+    private OnItemSelectedListener callback;
 
     public void setOnItemSelectedListener(OnItemSelectedListener callback) {
         this.callback = callback;
@@ -51,18 +44,15 @@ public class MainFragment extends Fragment {
         ItemClickListener clickListener = new ItemClickListener() {
             @Override
             public void onItemClick(ListViewNumber item) {
-                int number = item.getmNumber();
-                callback.onItemSelected(number);
-
-
+                callback.onItemSelected(item);
             }
         };
 
         mRecyclerView = view.findViewById(R.id.list_view);
         mAddButton = view.findViewById(R.id.button_add);
 
-        mLayoutManager = new GridLayoutManager(getContext(), calculateNumberOfColumns());
-
+        final int columns = getResources().getInteger(R.integer.columns_count);
+        mLayoutManager = new GridLayoutManager(getContext(), columns);
 
         if (savedInstanceState != null) {
             mListState = savedInstanceState.getParcelable(CommonConstants.LIST_STATE);
@@ -72,12 +62,21 @@ public class MainFragment extends Fragment {
         mListViewAdapter = new ListViewAdapter(ListViewSingleton.getInstance().getData(), clickListener);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mListViewAdapter);
+
+        mAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<ListViewNumber> list = ListViewSingleton.getInstance().getData();
+                ListViewNumber prev = list.get(list.size() - 1);
+                ListViewSingleton.getInstance().addNumber(prev.getmNumber() + 1);
+                mListViewAdapter.notifyItemInserted(list.size() - 1);
+            }
+        });
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-
         mListState = mLayoutManager.onSaveInstanceState();
         outState.putParcelable(CommonConstants.LIST_STATE, mListState);
     }
@@ -91,25 +90,8 @@ public class MainFragment extends Fragment {
     }
 
     @Override
-    public void onConfigurationChanged(@NonNull Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        if (mLayoutManager != null) {
-            if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                ((GridLayoutManager) mLayoutManager).setSpanCount(PORTRAIT_COLUMN_NUMBER);
-            } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                ((GridLayoutManager) mLayoutManager).setSpanCount(LANDSCAPE_COLUMN_NUMBER);
-            }
-        }
-    }
-
-    private int calculateNumberOfColumns() {
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            return LANDSCAPE_COLUMN_NUMBER;
-        }
-        return PORTRAIT_COLUMN_NUMBER;
-    }
-
-    public interface OnItemSelectedListener {
-        public void onItemSelected(int position);
+    public void onDetach() {
+        super.onDetach();
+        callback = null;
     }
 }

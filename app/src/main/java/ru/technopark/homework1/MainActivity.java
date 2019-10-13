@@ -1,13 +1,16 @@
 package ru.technopark.homework1;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+
 
 public class MainActivity extends AppCompatActivity
-        implements MainFragment.OnItemSelectedListener {
+        implements OnItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,45 +18,33 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         if (findViewById(R.id.fragment_container) != null) {
-            if (savedInstanceState != null) {
-                return;
+            if (savedInstanceState == null) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new MainFragment())
+                        .commit();
             }
-
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new MainFragment()).commit();
         }
     }
 
     @Override
     public void onAttachFragment(Fragment fragment) {
         if (fragment instanceof MainFragment) {
-            MainFragment headlinesFragment = (MainFragment) fragment;
-            headlinesFragment.setOnItemSelectedListener(this);
+            MainFragment mainFragment = (MainFragment) fragment;
+            mainFragment.setOnItemSelectedListener(this);
         }
     }
 
-    public void onItemSelected(int position) {
-        // The user selected the headline of an article from the HeadlinesFragment
-        // Do something here to display that article
-
-        MainFragment mainFrag = (MainFragment)
-                getSupportFragmentManager().findFragmentById(R.id.main_fragment);
-
-
+    public void onItemSelected(ListViewNumber numberItem) {
         ExtraFragment newFragment = new ExtraFragment();
         Bundle args = new Bundle();
-        args.putInt(CommonConstants.ARG_POSITION, position);
+        args.putInt(CommonConstants.EXTRA_NUMBER, numberItem.getmNumber());
+        int color = numberItem.isOdd() ? Color.RED : Color.BLUE;
+        args.putInt(CommonConstants.EXTRA_NUMBER_COLOR, color);
         newFragment.setArguments(args);
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.fragment_container, newFragment);
-        transaction.addToBackStack(null);
-
-        // Commit the transaction
-        transaction.commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, newFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }
 

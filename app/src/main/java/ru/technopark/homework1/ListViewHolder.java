@@ -26,17 +26,17 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
         return listItemView;
     }
 
-    public void bind(@NonNull final ListViewNumber numberSingleton, @NonNull final ItemClickListener clickListener) {
+    public void bind(@NonNull final ListViewNumber numberItem, @NonNull final ItemClickListener clickListener) {
         TextView mListItemView = getListItemView();
-        mListItemView.setText(numberSingleton.toString());
+        mListItemView.setText(numberItem.toString());
         getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickListener.onItemClick(numberSingleton);
+                clickListener.onItemClick(numberItem);
             }
         });
 
-        if (numberSingleton.isOdd()) {
+        if (numberItem.isOdd()) {
             mListItemView.setTextColor(Color.RED);
         } else {
             mListItemView.setTextColor(Color.BLUE);
