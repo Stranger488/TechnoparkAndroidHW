@@ -27,4 +27,12 @@ class ListViewSingleton {
         mData.add(new ListViewNumber(i));
     }
 
+    void restoreState(int size) {
+        if (size > 100 && mData.size() == 100) {
+            for (int i = 101; i <= size; i++) {
+                mData.add(new ListViewNumber(i));
+            }
+        }
+    }
+
 }

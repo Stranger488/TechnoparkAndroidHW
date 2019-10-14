@@ -84,6 +84,7 @@ public class MainFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null) {
             mListState = savedInstanceState.getParcelable(CommonConstants.LIST_STATE);
+            mLayoutManager.onRestoreInstanceState(mListState);
         }
     }
 

@@ -12,10 +12,6 @@ public class ListViewNumber implements Parcelable {
         return mNumber;
     }
 
-    public void setmNumber(int mNumber) {
-        this.mNumber = mNumber;
-    }
-
     ListViewNumber(int num) {
         this.mNumber = num;
     }

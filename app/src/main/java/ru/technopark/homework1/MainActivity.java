@@ -1,5 +1,6 @@
 package ru.technopark.homework1;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -42,6 +43,24 @@ public class MainActivity extends AppCompatActivity
                 .replace(R.id.fragment_container, newFragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (!isChangingConfigurations()) {
+            int size = ListViewSingleton.getInstance().getData().size();
+            outState.putInt(CommonConstants.LIST_SIZE, size);
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (!isChangingConfigurations()) {
+            int size = savedInstanceState.getInt(CommonConstants.LIST_SIZE);
+            ListViewSingleton.getInstance().restoreState(size);
+        }
     }
 }
 
