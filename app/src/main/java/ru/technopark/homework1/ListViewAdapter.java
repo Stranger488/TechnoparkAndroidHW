@@ -32,13 +32,13 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewHolder> {
         ListViewNumber current = mNumbers.get(position);
         if (current != null) {
             holder.getListItemView().setText(current.toString());
-            holder.bind(current, mClickListener);
+            ListViewNumber validCurrent = mNumbers.get(holder.getAdapterPosition());
+            holder.bind(validCurrent, mClickListener);
         }
-
     }
 
     @Override
-    public int getItemCount () {
+    public int getItemCount() {
         return mNumbers.size();
     }
 }

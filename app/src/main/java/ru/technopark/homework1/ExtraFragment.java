@@ -10,9 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class ExtraFragment extends Fragment {
-    private TextView mExtraTextView;
 
+public class ExtraFragment extends Fragment {
     public ExtraFragment() {
         //
     }
@@ -26,7 +25,7 @@ public class ExtraFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mExtraTextView = view.findViewById(R.id.extra_text);
+        TextView mExtraTextView = view.findViewById(R.id.extra_text);
 
         Bundle args = getArguments();
         if (args != null) {

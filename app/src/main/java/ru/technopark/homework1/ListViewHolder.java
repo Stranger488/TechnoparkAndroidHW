@@ -8,25 +8,25 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ListViewHolder extends RecyclerView.ViewHolder {
+class ListViewHolder extends RecyclerView.ViewHolder {
     private TextView listItemView;
     private LinearLayout root;
 
-    public ListViewHolder(@NonNull View itemView) {
+    ListViewHolder(@NonNull View itemView) {
         super(itemView);
         listItemView = itemView.findViewById(R.id.list_item);
         root = itemView.findViewById(R.id.list_item_root);
     }
 
-    public LinearLayout getRoot() {
+    private LinearLayout getRoot() {
         return root;
     }
 
-    public TextView getListItemView() {
+    TextView getListItemView() {
         return listItemView;
     }
 
-    public void bind(@NonNull final ListViewNumber numberItem, @NonNull final ItemClickListener clickListener) {
+    void bind(@NonNull final ListViewNumber numberItem, @NonNull final ItemClickListener clickListener) {
         TextView mListItemView = getListItemView();
         mListItemView.setText(numberItem.toString());
         getRoot().setOnClickListener(new View.OnClickListener() {

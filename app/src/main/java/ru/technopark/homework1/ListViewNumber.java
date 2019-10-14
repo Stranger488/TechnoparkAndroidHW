@@ -5,11 +5,10 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
-
 public class ListViewNumber implements Parcelable {
     private int mNumber;
 
-    public int getmNumber() {
+    int getmNumber() {
         return mNumber;
     }
 
@@ -17,11 +16,11 @@ public class ListViewNumber implements Parcelable {
         this.mNumber = mNumber;
     }
 
-    public ListViewNumber(int num) {
+    ListViewNumber(int num) {
         this.mNumber = num;
     }
 
-    public ListViewNumber(Parcel in) {
+    private ListViewNumber(Parcel in) {
         mNumber = in.readInt();
     }
 
@@ -53,7 +52,7 @@ public class ListViewNumber implements Parcelable {
         return String.valueOf(mNumber);
     }
 
-    public boolean isOdd() {
+    boolean isOdd() {
         return mNumber % 2 == 0;
     }
 }

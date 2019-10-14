@@ -18,12 +18,10 @@ import java.util.List;
 public class MainFragment extends Fragment {
     private ListViewAdapter mListViewAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private RecyclerView mRecyclerView;
-    private Button mAddButton;
     private Parcelable mListState;
     private OnItemSelectedListener callback;
 
-    public void setOnItemSelectedListener(OnItemSelectedListener callback) {
+    void setOnItemSelectedListener(OnItemSelectedListener callback) {
         this.callback = callback;
     }
 
@@ -48,8 +46,8 @@ public class MainFragment extends Fragment {
             }
         };
 
-        mRecyclerView = view.findViewById(R.id.list_view);
-        mAddButton = view.findViewById(R.id.button_add);
+        RecyclerView mRecyclerView = view.findViewById(R.id.list_view);
+        Button mAddButton = view.findViewById(R.id.button_add);
 
         final int columns = getResources().getInteger(R.integer.columns_count);
         mLayoutManager = new GridLayoutManager(getContext(), columns);
